@@ -27,3 +27,12 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+docker build . -t tensoring
+
+docker run -d -p 8080:80 tensoring
+
+docker save --output testImage.tar tensoring
+
+docker load --input saved-image.tar
