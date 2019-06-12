@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import { convertToTensor, createModel } from './services/tensor'
+import { convertToTensor, createModel, testModel } from './services/tensor'
 
 Vue.use(Vuex)
 
@@ -42,6 +42,7 @@ export default new Vuex.Store({
       await commit('setCarsObjArray', filteredCarsObjArray)
       const model = createModel()
       const convertedToTensor = await convertToTensor(state.carsObjArray, model)
+      const predictions = await testModel(model, state.carsObjArray, convertedToTensor)
     }
   },
   mutations: {

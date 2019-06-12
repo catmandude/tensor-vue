@@ -2,8 +2,9 @@
 export function createModel () {
   const model = tf.sequential()
   tfvis.show.modelSummary({ name: 'Model Summary' }, model)
-  model.add(tf.layers.dense({ inputShape: [1], units: 1, useBias: true }))
-  model.add(tf.layers.dense({ units: 1, useBias: true }))
+  model.add(tf.layers.dense({ inputShape: [1], units: 1 }))
+  model.add(tf.layers.dense({ units: 50, activation: 'sigmoid' }))
+  model.add(tf.layers.dense({ units: 1 }))
   return model
 }
 
@@ -40,8 +41,11 @@ export async function convertToTensor (carsObjArray, model) {
       labelMin
     }
   })
-  console.log(model)
-  return await trainModel(tidy.inputs, tidy.labels, model)
+  const trainedModel = await trainModel(tidy.inputs, tidy.labels, model)
+  return {
+    ...tidy,
+    trainedModel
+  }
 }
 
 async function trainModel (inputs, labels, model) {
@@ -68,8 +72,8 @@ async function trainModel (inputs, labels, model) {
 }
 
 export function testModel (model, inputData, normalizationData) {
-  const { inputMax, inputMin, labelMin, labelMax } = normalizationData
 
+  const { inputMax, inputMin, labelMin, labelMax } = normalizationData
   // Generate predictions for a uniform range of numbers between 0 and 1;
   // We un-normalize the data by doing the inverse of the min-max scaling
   // that we did earlier.

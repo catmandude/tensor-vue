@@ -20,13 +20,13 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   methods: {
-    ...mapActions(['fetchCars', 'createModel']),
+    ...mapActions(['fetchCars']),
     // ...mapActions(['convertToTensor'])
   },
   computed: mapGetters(['allCars']),
   created () {
     this.fetchCars()
-    this.createModel()
+    // this.createModel()
     // this.convertToTensor()
   }
 }

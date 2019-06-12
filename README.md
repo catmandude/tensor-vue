@@ -33,6 +33,6 @@ docker build . -t tensoring
 
 docker run -d -p 8080:80 tensoring
 
-docker save --output testImage.tar tensoring
+docker save --output vueTensorImage.tar tensoring
 
 docker load --input saved-image.tar
