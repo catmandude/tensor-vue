@@ -1,9 +1,9 @@
 
 export function createModel () {
   const model = tf.sequential()
-  tfvis.show.modelSummary({ name: 'Model Summary' }, model)
-  model.add(tf.layers.dense({ inputShape: [1], units: 1 }))
-  model.add(tf.layers.dense({ units: 50, activation: 'sigmoid' }))
+  // tfvis.show.modelSummary({ name: 'Model Summary' }, model)
+  model.add(tf.layers.dense({ inputShape: [1], units: 50 }))
+  model.add(tf.layers.dense({ units: 50, activation: 'relu' }))
   model.add(tf.layers.dense({ units: 1 }))
   return model
 }
@@ -110,4 +110,5 @@ export function testModel (model, inputData, normalizationData) {
       height: 300
     }
   )
+  return predictedPoints
 }

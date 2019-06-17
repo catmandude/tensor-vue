@@ -37,12 +37,12 @@ export default new Vuex.Store({
       }))
         .filter(car => (car.mpg !== null && car.horsepower !== null))
 
-      // const convertedToTensor = await convertToTensor(state)
       await commit('setCars', filteredCars)
       await commit('setCarsObjArray', filteredCarsObjArray)
       const model = createModel()
       const convertedToTensor = await convertToTensor(state.carsObjArray, model)
       const predictions = await testModel(model, state.carsObjArray, convertedToTensor)
+      console.log(predictions)
     }
   },
   mutations: {
