@@ -58,16 +58,16 @@ async function trainModel (inputs, labels, model) {
 
   const batchSize = 28
   const epochs = 50
-
+  console.log(model)
   return await model.fit(inputs, labels, {
     batchSize,
     epochs,
     shuffle: true,
-    callbacks: tfvis.show.fitCallbacks(
-      { name: 'Training Performance' },
-      ['loss', 'mse'],
-      { height: 200, callbacks: ['onEpochEnd'] }
-    )
+    // callbacks: tfvis.show.fitCallbacks(
+    //   { name: 'Training Performance' },
+    //   ['loss', 'mse'],
+    //   { height: 200, callbacks: ['onEpochEnd'] }
+    // )
   })
 }
 
@@ -110,5 +110,5 @@ export function testModel (model, inputData, normalizationData) {
       height: 300
     }
   )
-  return predictedPoints
+  return { originalPoints, predictedPoints }
 }

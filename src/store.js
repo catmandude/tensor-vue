@@ -25,8 +25,8 @@ export default new Vuex.Store({
     async fetchCars ({ commit, state }) {
       const response = await axios.get('https://storage.googleapis.com/tfjs-tutorials/carsData.json')
       const filteredCars = response.data.map(car => ([
-        car.Miles_per_Gallon,
-        car.Horsepower
+        car.Horsepower,
+        car.Miles_per_Gallon
       ]))
         .filter(car => (car.mpg !== null && car.horsepower !== null))
 
@@ -37,17 +37,18 @@ export default new Vuex.Store({
       }))
         .filter(car => (car.mpg !== null && car.horsepower !== null))
 
-      await commit('setCars', filteredCars)
+      await commit('setCars', [{ name: 'cars', data: filteredCars }])
       await commit('setCarsObjArray', filteredCarsObjArray)
       const model = createModel()
       const convertedToTensor = await convertToTensor(state.carsObjArray, model)
       const predictions = await testModel(model, state.carsObjArray, convertedToTensor)
-      console.log(predictions)
+      const filterTrained = predictions.predictedPoints.map(pred => ([pred.x, pred.y]))
+      await commit('setTrainedModel', filterTrained)
     }
   },
   mutations: {
     setCars: (state, cars) => state.cars = cars,
     setCarsObjArray: (state, cars) => state.carsObjArray = cars,
-    setTrainedModel: (state, trainedModel) => state.trainedModel = trainedModel
+    setTrainedModel: (state, trainedModel) => state.cars = [ ...state.cars, { name: 'trainedModel', data: trainedModel }]
   }
 })

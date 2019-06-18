@@ -18,9 +18,10 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+
 export default {
   methods: {
-    ...mapActions(['fetchCars']),
+    ...mapActions(['fetchCars'])
     // ...mapActions(['convertToTensor'])
   },
   computed: mapGetters(['allCars']),
@@ -28,6 +29,11 @@ export default {
     this.fetchCars()
     // this.createModel()
     // this.convertToTensor()
+  },
+  watch: {
+    allCars: function(newVal, oldVal) { // watch it
+      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+    }
   }
 }
 </script>
